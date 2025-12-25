@@ -1,6 +1,6 @@
-# Task Manager API
+# Assignment 1 : Task Manager API
 
-A RESTful API for managing tasks built with Node.js and Express as part of Airtribe Backend Engineering program. 
+A RESTful API for managing tasks built with Node.js and Express.
 
 ## Features
 
@@ -63,3 +63,5 @@ npm test
 ```
 
 ## License
+
+MIT © 2025 Ahsas Sharma
