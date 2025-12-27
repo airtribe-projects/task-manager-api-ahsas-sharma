@@ -35,10 +35,9 @@ function CreateTask(req, res) {
 }
 
 function GetAllTasks(req, res) {
-  let data = tasksStore.tasks;
+  let data = [...tasksStore.tasks];
   const { completed, priority } = req.query;
-  console.log("QUERY completion status :", completed);
-  console.log("QUERY priority:", priority);
+
   if (completed !== undefined) {
     if (completed !== "true" && completed !== "false") {
       return res.status(400).json({
@@ -115,7 +114,7 @@ function UpdateTaskById(req, res) {
           "Invalid payload. Please check the request body and try again.",
       });
     } else {
-      res.status(500).json({ message: "Server Error" });
+      res.status(500).json({ message: "Server Error", task: updatedTask });
     }
   }
 }
@@ -134,10 +133,13 @@ function DeleteTaskById(req, res, next) {
     if (taskIndex === -1) {
       throw Error("TASK_NOT_FOUND");
     }
-
+    let taskToDelete = data.tasks[taskIndex];
     data.tasks.splice(taskIndex, 1);
     fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
-    res.json({ message: "Task deleted successfully!" });
+    res.json({
+      message: "Task deleted successfully!",
+      deletedTask: taskToDelete,
+    });
   } catch (error) {
     if (error.message === "TASK_NOT_FOUND") {
       res

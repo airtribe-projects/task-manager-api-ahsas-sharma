@@ -151,14 +151,6 @@
       "completed": true,
       "priority": "high",
       "creationDate": "2025-12-27T19:41:40.240Z"
-    },
-    {
-      "id": 21,
-      "title": "Another Low Task",
-      "description": "Low priorty task",
-      "completed": false,
-      "priority": "low",
-      "creationDate": "2025-12-27T19:41:47.899Z"
     }
   ]
 }

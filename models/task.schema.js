@@ -5,7 +5,7 @@ const TaskSchema = z.object({
   title: z.string().min(1),
   description: z.string().min(1),
   completed: z.boolean().default(false),
-  priority: z.enum(["low", "medium", "high"]),
+  priority: z.enum(["low", "medium", "high"]).default("low"),
 });
 
 module.exports = TaskSchema;
