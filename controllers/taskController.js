@@ -14,6 +14,7 @@ function CreateTask(req, res) {
     const newTask = {
       id: nextId,
       ...parsedTask,
+      creationDate: new Date().toISOString(),
     };
     data.tasks.push(newTask);
     fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
@@ -34,7 +35,29 @@ function CreateTask(req, res) {
 }
 
 function GetAllTasks(req, res) {
-  const data = tasksStore.tasks;
+  let data = tasksStore.tasks;
+  const { completed, priority } = req.query;
+  console.log("QUERY completion status :", completed);
+  console.log("QUERY priority:", priority);
+  if (completed !== undefined) {
+    if (completed !== "true" && completed !== "false") {
+      return res.status(400).json({
+        error: "completed must be 'true' or 'false'",
+      });
+    }
+
+    const completedBool = completed === "true";
+    data = data.filter((task) => task.completed === completedBool);
+  }
+
+  if (priority !== undefined) {
+    data = data.filter((task) => task.priority === priority);
+  }
+
+  data = data.sort(
+    (a, b) => new Date(b.creationDate) - new Date(a.creationDate)
+  );
+
   res.send(data);
 }
 
